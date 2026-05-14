@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Debora &amp; Luca · 5 Settembre 2026</title>
+  <title>Debora & Luca · 5 Settembre 2026</title>
   
-  <!-- [CONFIG_GLOBALS] Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
   
-  <!-- [CONFIG_GLOBALS] Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -25,12 +23,10 @@
     }
   </script>
   
-  <!-- [CONFIG_GLOBALS] React 18 & Babel -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <!-- [CONFIG_GLOBALS] GSAP + ScrollTrigger + Confetti -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
@@ -38,7 +34,7 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
-    body { background: #FDFBF7; overflow: hidden; } /* Overflow hidden until preloader finishes */
+    body { background: #FDFBF7; overflow: hidden; }
     ::placeholder { opacity: 0.5; color: #A3B899; }
     select option { background: #FDFBF7; color: #7a9070; }
     .btn-premium { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -52,12 +48,17 @@
     gsap.registerPlugin(ScrollTrigger);
     
     /* === [CONFIG_GLOBALS] ASSETS & DATA === */
-    // TIER 1/2 Architecture: Images served via Cloudinary/ImageKit
-    const HERO_FRAME = "https://res.cloudinary.com/dvjgznbzm/image/upload/v1775313532/Segnaposto_Bianco_Rosa_Elegante_Floreale_fh2yec.png";
-    const MUSIC_URL = "https://res.cloudinary.com/dvjgznbzm/video/upload/v1774795778/paulyudin-romantic-piano-164822_ytzzn3.mp3";
+    const MUSIC_URL = "https://ik.imagekit.io/hiacc/audio_sposi.mp3"; 
+    
+    // 1. VIDEO DELLA BUSTA
     const VIDEO_URL = "https://ik.imagekit.io/hiacc/Template_D&L/B%20verde_CL%20Bianca%20D&L.mp4";
-    const VIDEO_POSTER = "https://res.cloudinary.com/dvjgznbzm/video/upload/so_0,f_auto,q_auto/v1774820579/busta_verde_pastello_con_data_debossing_lzadff.jpg";
-    const WATERMARK_VIDEO_URL = "https://res.cloudinary.com/dvjgznbzm/video/upload/v1775240241/1_Modifica_video_matrimonio_festa_notturna_online-video-cutter.com_d01pfq.mp4";
+    
+    // 2. COPERTINA STATICA
+    const VIDEO_POSTER = "https://res.cloudinary.com/dvjgznbzm/image/upload/v1778739412/COPERTINA_B_Pesco_CL_Bianca_D_L_znvceb.png";
+    
+    // 3. VIDEO DEGLI SPOSI
+    const WATERMARK_VIDEO_URL = "https://res.cloudinary.com/dvjgznbzm/video/upload/v1778709640/cornice_fiori_sposi_def_jc9d35.mp4"; 
+    
     const LOCATION_IMG = "https://res.cloudinary.com/dvjgznbzm/image/upload/v1775293975/IMG_2668_zslsvj.png";
     const PARTY_IMG    = "https://res.cloudinary.com/dvjgznbzm/image/upload/v1775304249/IMG_2907_jknv2c.png";
 
@@ -98,12 +99,12 @@
       );
     }
     
-    /* === [SECT_HERO] Video Watermark & Monogram === */
-    const VideoWatermark = forwardRef(({ videoRef }, ref) => {
+    /* === [SECT_HERO] Video (Senza cornice) & Monogram === */
+    const VideoHero = forwardRef(({ videoRef }, ref) => {
       return (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden" aria-hidden="true" style={{ zIndex: 0 }}>
-          <div ref={ref} className="relative w-[80vw] sm:w-[50vw] max-w-md rounded-[1.5rem] overflow-hidden" style={{ opacity: 0, willChange: "opacity" }}>
-            <video ref={videoRef} autoPlay={true} loop={true} muted={true} playsInline={true} className="w-full h-auto pointer-events-none select-none" style={{ mixBlendMode: "multiply", filter: "contrast(1.05)", transform: "scale(1.08)" }}>
+          <div ref={ref} className="relative w-[85vw] sm:w-[50vw] max-w-lg rounded-[1.5rem] overflow-hidden shadow-2xl" style={{ opacity: 0, transform: "scale(0.95)", willChange: "opacity, transform" }}>
+            <video ref={videoRef} autoPlay={true} loop={true} muted={true} playsInline={true} className="w-full h-auto pointer-events-none select-none" style={{ filter: "contrast(1.05)" }}>
               <source src={WATERMARK_VIDEO_URL} type="video/mp4" />
             </video>
           </div>
@@ -116,7 +117,7 @@
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden" aria-hidden="true" style={{ zIndex: 1 }}>
           <span ref={ref} className="font-serif italic leading-none"
             style={{ fontSize: "clamp(12rem,30vw,24rem)", color: "#A3B899", opacity: 0.8, transform: "scale(1.15)", letterSpacing: "-0.02em", userSelect: "none", willChange: "opacity, transform" }}>
-            D&amp;L
+            D&L
           </span>
         </div>
       );
@@ -245,7 +246,7 @@
       return (
         <section className="w-full py-24 md:py-32" style={{ backgroundColor: "#f5f0e8" }}>
           <div className="text-center mb-10">
-            <p className="font-serif italic text-sm tracking-[0.4em] uppercase" style={{ color: "#F4B9A1" }}>✦ &nbsp; I nostri momenti &nbsp; ✦</p>
+            <p className="font-serif italic text-sm tracking-[0.4em] uppercase" style={{ color: "#F4B9A1" }}>✦   I nostri momenti   ✦</p>
           </div>
           <div className="relative mx-auto overflow-hidden" style={{ height: "clamp(260px,50vw,520px)", maxWidth: "900px" }}>
             {PHOTOS.map((src, i) => {
@@ -315,7 +316,7 @@
             {FULL_ITEMS.map((q, i) => (
               <div key={i} className="inline-flex items-center gap-8 px-14" style={{ flexShrink: 0 }}>
                 <span className="font-serif italic" style={{ color: "#7a9070", fontSize: "clamp(1rem,2.2vw,1.25rem)", letterSpacing: "0.01em" }}>
-                  &ldquo;{q.text}&rdquo;
+                  “{q.text}”
                 </span>
                 <span className="font-sans uppercase font-medium" style={{ color: "#F4B9A1", fontSize: "0.62rem", letterSpacing: "0.35em", flexShrink: 0 }}>
                   — {q.author}
@@ -362,7 +363,7 @@
         <div className="w-full">
           <section className="pt-28 md:pt-40 pb-16 px-6 max-w-2xl mx-auto">
             <div className="text-center mb-16">
-              <p className="font-serif italic text-base tracking-[0.4em] uppercase mb-3" style={{ color: "#F4B9A1" }}>✦ &nbsp; La Giornata &nbsp; ✦</p>
+              <p className="font-serif italic text-base tracking-[0.4em] uppercase mb-3" style={{ color: "#F4B9A1" }}>✦   La Giornata   ✦</p>
               <h2 className="font-serif text-4xl md:text-5xl font-light" style={{ color: "#7a9070" }}>Programma</h2>
             </div>
             <div className="relative">
@@ -414,7 +415,7 @@
       );
     }
     
-    /* === [SECT_RSVP] Form con logica di caricamento simulata === */
+    /* === [SECT_RSVP] Form === */
     function RSVPForm() {
       const [name, setName]           = useState("");
       const [attending, setAttending] = useState("");
@@ -429,18 +430,16 @@
       const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitting(true);
-        // [FIREBASE_HOOK] Qui inseriremo la logica per salvare il documento su Firebase Firestore
-        // Esempio: await addDoc(collection(db, "rsvps"), { name, attending, guests, song, notes });
         setTimeout(() => {
           setSubmitting(false);
           setSubmitted(true);
-        }, 1500); // Simulazione latenza di rete
+        }, 1500);
       };
 
       return (
         <section className="py-28 md:py-40 px-6 max-w-xl mx-auto">
           <div className="text-center mb-14">
-            <p className="font-serif italic text-base tracking-[0.4em] uppercase mb-3" style={{ color: "#F4B9A1" }}>✦ &nbsp; Conferma la tua presenza &nbsp; ✦</p>
+            <p className="font-serif italic text-base tracking-[0.4em] uppercase mb-3" style={{ color: "#F4B9A1" }}>✦   Conferma la tua presenza   ✦</p>
             <p className="font-serif italic text-xl" style={{ color: "#7a9070" }}>entro il 31 Luglio 2026</p>
           </div>
           <CornerOrnaments>
@@ -496,7 +495,7 @@
                       style={inputStyle} placeholder="Eventuali note..." />
                   </div>
                   <div>
-                    <label className="block font-sans text-xs uppercase tracking-[0.3em] mb-2 font-medium" style={{ color: "#7a9070" }}>🎵 &nbsp; La tua canzone del cuore</label>
+                    <label className="block font-sans text-xs uppercase tracking-[0.3em] mb-2 font-medium" style={{ color: "#7a9070" }}>🎵   La tua canzone del cuore</label>
                     <input type="text" value={song} onChange={e => setSong(e.target.value)}
                       className="w-full bg-transparent py-2 font-serif text-lg focus:outline-none"
                       style={inputStyle} placeholder="Titolo – Artista" />
@@ -530,9 +529,8 @@
       const watermarkRef    = useRef(null);
       const watermarkVideoRef = useRef(null);
       const textCiSposiamoFullscreenRef = useRef(null);
-      const heroFrameRef    = useRef(null);
       const bgAudioRef      = useRef(null);
-      const flashRef        = useRef(null); // Ref per l'effetto flash
+      const flashRef        = useRef(null); 
       const sequenceStarted = useRef(false);
       
       const [preloaderHidden, setPreloaderHidden] = useState(false);
@@ -566,14 +564,13 @@
         };
 
         const onTime = () => {
-          // Attendi circa 5.5 secondi del video (momento in cui si apre e appare la card)
           if (video.currentTime >= 5.5) {
             startSequence();
           }
         };
 
         video.addEventListener("timeupdate", onTime);
-        video.addEventListener("ended", startSequence); // Fallback nel caso in cui il video finisca prima
+        video.addEventListener("ended", startSequence); 
         
         return () => {
           video.removeEventListener("timeupdate", onTime);
@@ -581,7 +578,7 @@
         };
       }, []);
       
-      /* --- ScrollTrigger Animations (Post-Preloader) --- */
+      /* --- ScrollTrigger Animations --- */
       useEffect(() => {
         if (!preloaderHidden) return;
         document.querySelectorAll(".stagger-group").forEach(group => {
@@ -590,18 +587,14 @@
         });
         document.querySelectorAll(".reveal").forEach(el =>
           gsap.fromTo(el, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } }));
-        document.querySelectorAll(".revelation").forEach(el =>
-          gsap.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 80%" } }));
-        document.querySelectorAll(".scale-reveal").forEach(el =>
-          gsap.fromTo(el, { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 1.4, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } }));
         ScrollTrigger.refresh();
       }, [preloaderHidden]);
       
-      /* --- GSAP Cinematic Sequence --- */
+      /* --- GSAP Cinematic Sequence Aggiornata --- */
       function runCinematicSequence() {
         const tl = gsap.timeline();
         
-        // Prima il flash bianco per introdurre dolcemente
+        // 1. Flash bianco & spegnimento preloader
         tl.to(flashRef.current, { opacity: 1, duration: 0.8, ease: "power2.in" })
           .to(videoRef.current, { opacity: 0, duration: 0.1 }, "-=0.1")
           .to(preloaderRef.current, { opacity: 0, duration: 0.5, onComplete: () => {
@@ -609,29 +602,67 @@
             document.body.style.overflow = "auto";
             setPreloaderHidden(true);
           }}, "+=0.2")
-          // Sfuma via il flash bianco scoprendo il contenuto principale
+          
+          // Appare il contenitore principale mentre svanisce il flash
           .to(flashRef.current, { opacity: 0, duration: 1.5, ease: "power2.out" })
           .to(mainContentRef.current, { opacity: 1, duration: 0.5 }, "-=1.5")
           
-          /* 1. D&L diventa filigrana + "Ci Sposiamo!" */
+          // 2. Mostra "Ci Sposiamo!"
           .to(monogramRef.current, { opacity: 0.055, scale: 1, duration: 1.5, ease: "power2.inOut" }, "-=1")
           .to(textCiSposiamoFullscreenRef.current, { opacity: 1, duration: 1.5, ease: "power2.inOut" }, "<")
           
-          /* Breve pausa */
-          .to({}, { duration: 2.0 })
+          // Pausa per leggere la scritta
+          .to({}, { duration: 1.5 })
           
-          /* 2. Rimpicciolimento testi e apparizione filigrana video */
-          .to(textCiSposiamoFullscreenRef.current, { opacity: 0, scale: 0.85, duration: 1.5, ease: "power2.inOut" })
-          .to(monogramRef.current, { opacity: 0, scale: 0.85, duration: 1.5, ease: "power2.inOut" }, "<")
-          .to(watermarkRef.current, { opacity: 0.15, duration: 1.5, ease: "power2.inOut" }, "<")
+          // 3. "Ci Sposiamo" svanisce -> IL VIDEO SPOSI APPARE IN PRIMO PIANO
+          .to(textCiSposiamoFullscreenRef.current, { opacity: 0, scale: 0.85, duration: 1.0, ease: "power2.inOut" })
+          .to(monogramRef.current, { opacity: 0, scale: 0.85, duration: 1.0, ease: "power2.inOut" }, "<")
+          .to(watermarkRef.current, { opacity: 1, scale: 1.05, duration: 1.0, ease: "power2.inOut" }, "<") // Opacità 100% per il video
           
-          /* 3. Apparizione UI Finale */
-          .to(heroTextRef.current, { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }, "-=0.5")
-          .to(heroFrameRef.current, { opacity: 1, scale: 1, duration: 1.5, ease: "power3.out" }, "<")
+          // Lasciamo godere il video per 1.2 secondi esatti
+          .to({}, { duration: 1.2 })
+          
+          // 4. Il video passa in background (opacità si abbassa) e appaiono i testi
+          .to(watermarkRef.current, { opacity: 0.18, scale: 1, duration: 1.5, ease: "power3.inOut" })
+          .to(heroTextRef.current, { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }, "-=1.0")
           .to(scrollArrowRef.current, { autoAlpha: 1, duration: 1.5, ease: "power3.out" }, "<");
       }
       
-      /* --- Audio Controls --- */
+      /* --- Eventi al Click (CON FIX DI SICUREZZA) --- */
+      function handleClick() {
+        if (clickAreaRef.current) clickAreaRef.current.style.pointerEvents = 'none';
+        
+        // Fai partire la musica
+        startMusic();
+        
+        // Fai partire il video in background
+        if (watermarkVideoRef.current) {
+          watermarkVideoRef.current.muted = true;
+          watermarkVideoRef.current.play().catch(() => {});
+        }
+
+        // Fai partire la busta
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          videoRef.current.play().catch(e => {
+            console.warn("Video della busta bloccato dal browser", e);
+            if (!sequenceStarted.current) {
+              sequenceStarted.current = true;
+              runCinematicSequence();
+            }
+          });
+        }
+
+        // FALLBACK DEFINITIVO
+        setTimeout(() => {
+          if (!sequenceStarted.current) {
+             console.warn("Timeout raggiunto, forzatura dell'apertura dell'invito.");
+             sequenceStarted.current = true;
+             runCinematicSequence();
+          }
+        }, 6500);
+      }
+      
       function startMusic() {
         const a = bgAudioRef.current;
         if (!a) return;
@@ -645,19 +676,6 @@
         if (musicPlaying) { a.pause(); setMusicPlaying(false); }
         else { a.play().then(() => setMusicPlaying(true)).catch(() => {}); }
       }
-
-      function handleClick() {
-        if (clickAreaRef.current) clickAreaRef.current.style.pointerEvents = 'none';
-        if (videoRef.current) {
-          videoRef.current.muted = true;
-          videoRef.current.play().catch(() => {});
-        }
-        if (watermarkVideoRef.current) {
-          watermarkVideoRef.current.muted = true;
-          watermarkVideoRef.current.play().catch(() => {});
-        }
-        startMusic();
-      }
       
       return (
         <>
@@ -670,8 +688,12 @@
           <div ref={preloaderRef} className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden"
             style={{ backgroundColor: "#FDFBF7" }}>
             <div ref={clickAreaRef} onClick={handleClick} className="absolute inset-0 z-[210] cursor-pointer" />
+            
+            {/* Immagine di copertina statica fornita, copre il video prima del play */}
+            <img src={VIDEO_POSTER} alt="Invito" className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none" style={{ zIndex: 1 }} />
+            
             <video ref={videoRef} muted={true} playsInline={true} preload="auto" poster={VIDEO_POSTER} 
-              className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none" style={{ transformOrigin: "center" }}>
+              className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none" style={{ transformOrigin: "center", zIndex: 2 }}>
               <source src={VIDEO_URL} type="video/mp4" />
             </video>
           </div>
@@ -680,25 +702,17 @@
             
             {/* [SECT_HERO] */}
             <section className="relative h-screen w-full flex items-center justify-center overflow-hidden" style={{ backgroundColor:"#FDFBF7" }}>
-              <VideoWatermark ref={watermarkRef} videoRef={watermarkVideoRef} />
+              <VideoHero ref={watermarkRef} videoRef={watermarkVideoRef} />
               <Monogram ref={monogramRef} />
               
               <div ref={textCiSposiamoFullscreenRef} className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0" style={{ zIndex: 2, transform: 'scale(1)', willChange: 'opacity, transform' }}>
                 <h2 className="font-serif italic text-6xl md:text-8xl" style={{ color:"#7a9070" }}>Ci Sposiamo!</h2>
               </div>
 
-              <div ref={heroFrameRef} className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0" style={{ zIndex: 1, transform: 'scale(0.95)', mixBlendMode: 'multiply', willChange: 'opacity, transform' }}>
-                <img src={HERO_FRAME} alt="" className="w-full h-full object-cover md:object-contain" 
-                  style={{ 
-                    WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
-                    maskImage: "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)"
-                  }} />
-              </div>
-
               <div ref={heroTextRef} className="absolute inset-0 flex flex-col justify-between pt-[24vh] md:pt-[26vh] pb-[22vh] px-10 md:px-16 text-center opacity-0 pointer-events-none mx-auto max-w-lg" style={{ transform:"translateY(40px)", zIndex:2 }}>
                 <div>
                   <h1 className="font-serif text-5xl md:text-7xl font-normal leading-none" style={{ color:"#7a9070", textShadow: "0 4px 20px rgba(253, 251, 247, 0.6)" }}>
-                    Debora <span style={{ color:"#F4B9A1" }}>&amp;</span> Luca
+                    Debora <span style={{ color:"#F4B9A1" }}>&</span> Luca
                   </h1>
                   <p className="font-serif italic text-2xl md:text-3xl mt-4 md:mt-6" style={{ color:"#7a9070", textShadow: "0 4px 15px rgba(253, 251, 247, 0.6)", fontWeight: 400 }}>
                     Siamo felici di invitarvi al nostro matrimonio
@@ -747,7 +761,7 @@
             {/* [SECT_LOCATION] */}
             <section className="py-28 md:py-40 px-6 text-center max-w-3xl mx-auto stagger-group">
               <div className="text-center mb-12">
-                <p className="font-serif italic text-base tracking-[0.4em] uppercase mb-3" style={{ color: "#F4B9A1" }}>✦ &nbsp; La Location &nbsp; ✦</p>
+                <p className="font-serif italic text-base tracking-[0.4em] uppercase mb-3" style={{ color: "#F4B9A1" }}>✦   La Location   ✦</p>
                 <h2 className="font-serif text-4xl md:text-5xl font-light" style={{ color: "#7a9070" }}>Dove Festeggeremo</h2>
               </div>
               
@@ -789,7 +803,7 @@
             
             {/* [SECT_FOOTER] */}
             <footer className="relative py-20 md:py-28 text-center overflow-hidden">
-              <p className="font-serif italic text-sm mb-8" style={{ color: "#7a9070", opacity: 0.85 }}>Debora &amp; Luca · 5 Settembre 2026</p>
+              <p className="font-serif italic text-sm mb-8" style={{ color: "#7a9070", opacity: 0.85 }}>Debora & Luca · 5 Settembre 2026</p>
               <div className="flex items-center justify-center gap-3 mb-2">
                 <div className="h-px w-8" style={{ backgroundColor: "#A3B899", opacity: 0.5 }} />
                 <p className="font-sans text-xs uppercase tracking-[0.3em] font-semibold" style={{ color: "#7a9070", opacity: 0.8 }}>Per informazioni</p>
@@ -801,7 +815,6 @@
                 <a href="tel:+393475145114" className="font-serif italic text-lg transition-opacity hover:opacity-80" style={{ color: "#7a9070", fontWeight: 500 }}>Luca · 347 514 5114</a>
               </div>
               
-              {/* Firma Announceyourday */}
               <div className="mt-16 relative z-10">
                 <a href="https://announceyourday.com" target="_blank" rel="noopener noreferrer" 
                    className="inline-block font-sans text-[10px] uppercase tracking-widest transition-colors duration-300"
