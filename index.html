@@ -210,9 +210,7 @@
         setAnimating(true);
         if (fromUser) { pausedRef.current = true; setTimeout(() => { pausedRef.current = false; }, 7000); }
         setCurrent((index + PHOTOS.length) % PHOTOS.length);
-        
-        // Animazione rallentata e ammorbidita (era 600ms, ora 1500ms)
-        setTimeout(() => setAnimating(false), 1500);
+        setTimeout(() => setAnimating(false), 600);
       }, [animating]);
       
       useEffect(() => {
@@ -235,14 +233,8 @@
                             { transform: `translateX(${norm > 0 ? 68 : -68}%) scale(0.78)`, opacity: 0.65, zIndex: 5, cursor: "pointer" };
               return (
                 <div key={src} onClick={() => norm !== 0 && goTo(i, true)}
-                  className="absolute top-0 left-1/2 ease-out"
-                  style={{ 
-                     width: "clamp(220px,55vw,560px)", 
-                     height: "100%", 
-                     marginLeft: "calc(clamp(220px,55vw,560px) / -2)", 
-                     transition: "transform 1.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 1.5s ease, filter 1.5s ease",
-                     ...style 
-                  }}>
+                  className="absolute top-0 left-1/2 transition-all duration-700 ease-out"
+                  style={{ width: "clamp(220px,55vw,560px)", height: "100%", marginLeft: "calc(clamp(220px,55vw,560px) / -2)", ...style }}>
                   <img src={src} className="w-full h-full rounded-sm object-cover" />
                 </div>
               );
@@ -251,7 +243,7 @@
           <div className="flex items-center justify-center gap-8 mt-8">
             <div className="flex items-center gap-2">
               {PHOTOS.map((_, i) => (
-                <button key={i} onClick={() => goTo(i, true)} className="rounded-full transition-all duration-1000"
+                <button key={i} onClick={() => goTo(i, true)} className="rounded-full transition-all duration-500"
                   style={{ width: i === current ? "22px" : "7px", height: "7px", backgroundColor: i === current ? "#F4B9A1" : "#A3B899", opacity: i === current ? 1 : 0.6 }} />
               ))}
             </div>
@@ -349,6 +341,7 @@
       return (
         <section id="rsvp-section" className="relative py-28 md:py-40 px-6 w-full flex items-center justify-center overflow-hidden">
           
+          {/* VIDEO RSVP BACKGROUND */}
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-0 opacity-70 mix-blend-multiply overflow-hidden">
              <video autoPlay loop muted playsInline className="w-full h-full object-cover">
                <source src={RSVP_FRAME_VIDEO} type="video/mp4" />
@@ -467,40 +460,34 @@
         video.addEventListener("ended", () => { if (!sequenceStarted.current) { sequenceStarted.current = true; runCinematicSequence(); }});
       }, []);
       
-      /* Animazioni GSAP RALLENTATE E AMMORBIDITE (+1.5 sec) */
       useEffect(() => {
         if (!preloaderHidden) return;
-        document.querySelectorAll(".stagger-group").forEach(group => {
-          gsap.fromTo(Array.from(group.children), { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 2.5, stagger: 0.3, ease: "power3.out", scrollTrigger: { trigger: group, start: "top 82%" } });
-        });
-        document.querySelectorAll(".reveal").forEach(el => gsap.fromTo(el, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 2.5, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } }));
+        document.querySelectorAll(".reveal").forEach(el => gsap.fromTo(el, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } }));
         ScrollTrigger.refresh();
       }, [preloaderHidden, lang]);
 
-      /* Sequenza di avvio rallentata e fluida */
       function runCinematicSequence() {
         const tl = gsap.timeline();
-        tl.to(flashRef.current, { opacity: 1, duration: 1.5, ease: "power2.in" })
+        tl.to(flashRef.current, { opacity: 1, duration: 0.8, ease: "power2.in" })
           .set(preloaderRef.current, { display: "none" })
           .call(() => { document.body.style.overflow = "auto"; setPreloaderHidden(true); })
-          .to(flashRef.current, { opacity: 0, duration: 3.0, ease: "power2.out" })
-          .to(mainContentRef.current, { opacity: 1, duration: 1.5 }, "-=3.0")
+          .to(flashRef.current, { opacity: 0, duration: 1.5, ease: "power2.out" })
+          .to(mainContentRef.current, { opacity: 1, duration: 0.5 }, "-=1.5")
           
-          .to(monogramRef.current, { opacity: 0.05, scale: 1, duration: 3.0 }, "-=2.0")
-          .to(textCiSposiamoFullscreenRef.current, { opacity: 1, duration: 3.0 }, "<")
-          
+          .to(monogramRef.current, { opacity: 0.05, scale: 1, duration: 1.5 }, "-=1")
+          .to(textCiSposiamoFullscreenRef.current, { opacity: 1, duration: 1.5 }, "<")
           .to({}, { duration: 1.5 })
+          .to(textCiSposiamoFullscreenRef.current, { opacity: 0, scale: 0.85, duration: 1.0 })
+          .to(monogramRef.current, { opacity: 0, scale: 0.85, duration: 1.0 }, "<")
+          .to(watermarkRef.current, { opacity: 1, scale: 1.05, filter: "blur(0px)", duration: 1.0 }, "<") 
           
-          .to(textCiSposiamoFullscreenRef.current, { opacity: 0, scale: 0.85, duration: 2.5 })
-          .to(monogramRef.current, { opacity: 0, scale: 0.85, duration: 2.5 }, "<")
-          .to(watermarkRef.current, { opacity: 1, scale: 1.05, filter: "blur(0px)", duration: 2.5 }, "<") 
+          /* === MODIFICA TRANSIZIONE BACKGROUND A 0.5 sec === */
+          .to({}, { duration: 0.5 })
           
-          /* PAUSA VIDEO IN PRIMO PIANO - Mantenuta a 0.8 come richiesto */
-          .to({}, { duration: 0.8 })
-          
-          .to(watermarkRef.current, { opacity: 0.20, scale: 1, filter: "blur(3px)", duration: 3.0, ease: "power3.inOut" })
-          .to(heroTextRef.current, { opacity: 1, y: 0, duration: 3.0, ease: "power3.out" }, "-=2.0")
-          .to(scrollArrowRef.current, { autoAlpha: 1, duration: 3.0 }, "<");
+          // VIDEO IN BACKGROUND: Opacità abbassata a 0.20 per far risaltare meglio il testo
+          .to(watermarkRef.current, { opacity: 0.20, scale: 1, filter: "blur(3px)", duration: 1.5, ease: "power3.inOut" })
+          .to(heroTextRef.current, { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }, "-=1.0")
+          .to(scrollArrowRef.current, { autoAlpha: 1, duration: 1.5 }, "<");
       }
 
       function handleClick() {
@@ -548,6 +535,7 @@
           
           <div ref={mainContentRef} className="opacity-0 overflow-x-hidden bg-[#FDFBF7]">
             
+            {/* HERO CENTRATA CON OMBREGGIATURA MORBIDA SU TUTTO IL TESTO PER LEGGIBILITA' */}
             <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
               <VideoHero ref={watermarkRef} videoRef={watermarkVideoRef} />
               <Monogram ref={monogramRef} />
@@ -574,6 +562,7 @@
 
             <BotanicalDivider />
 
+            {/* COUNTDOWN CENTRATO */}
             <section className="py-24 px-6 text-center reveal">
               <h2 className="font-serif italic text-2xl md:text-4xl text-[#7a9070] mb-12 max-w-sm md:max-w-xl mx-auto text-balance font-normal leading-relaxed">{t("contoRovescia")}</h2>
               <Countdown t={t} />
@@ -581,6 +570,7 @@
 
             <BotanicalDivider />
 
+            {/* LOCATION CENTRATA */}
             <section className="py-24 px-6 text-center max-w-3xl mx-auto reveal">
               <p className="font-serif italic text-sm tracking-[0.3em] uppercase mb-4 text-[#F4B9A1] font-medium">{t("titoloLocation")}</p>
               <h2 className="font-serif text-4xl md:text-5xl text-[#7a9070] mb-12 font-normal">{t("doveFesteggeremo")}</h2>
@@ -601,6 +591,7 @@
 
             <BotanicalDivider />
 
+            {/* FOOTER */}
             <footer className="py-20 text-center px-6">
               <p className="font-serif italic text-sm text-[#7a9070] mb-8 font-normal">Debora & Luca · 5 Settembre 2026</p>
               <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 mb-16">
