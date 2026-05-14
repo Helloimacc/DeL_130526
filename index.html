@@ -9,6 +9,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   
+  <script src="https://cdn.tailwindcss.com"></script><!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debora & Luca · 5 Settembre 2026</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -38,15 +49,6 @@
     ::placeholder { opacity: 0.4; color: #A3B899; }
     select option { background: #FDFBF7; color: #7a9070; }
     .btn-premium { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    /* === ANIMAZIONE LUCE SULLA CERALACCA AUMENTATA === */
-    @keyframes pulse-light {
-      0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
-      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.8); }
-    }
-    .animate-pulse-light {
-      animation: pulse-light 2.5s infinite ease-in-out;
-    }
   </style>
 </head>
 <body>
@@ -92,13 +94,13 @@
         arrivo: "Accoglienza", arrivoDettaglio: "Arrivo degli ospiti", cerimonia: "Cerimonia Civile",
         aperitivo: "Aperitivo di Benvenuto", aperitivoDettaglio: "Buffet", ricevimento: "Il Ricevimento",
         torta: "Taglio della Torta", party: "Party & Live Band", titoloMomenti: "✦  I nostri momenti  ✦",
-        titoloRSVP: "✦  RSVP  ✦", entroData: "entro il 31 Luglio 2026", nome: "Nome e Cognome",
+        titoloRSVP: "✦  RSVP  ✦", entroData: "entro il 329 Agosto 2026", nome: "Nome e Cognome",
         nomePlaceholder: "Il tuo nome", parteciperai: "Parteciperai?", siSaro: "Sì, ci sarò!",
         noDispiace: "No, mi dispiace..", numPersone: "Numero di persone",
         note: "Note o intolleranze alimentari", notePlaceholder: "Scrivi qui...",
-        canzone: "🎵  La tua canzone del cuore", canzonePlaceholder: "Titolo – Artista",
+        canzone: "🎵  C'è una canzone che vorresti ballare al Matrimonio?", canzonePlaceholder: "Titolo – Artista",
         canzoneDettaglio: "La includeremo nella playlist della serata!", confermaBtn: "Conferma Presenza",
-        grazie: "Grazie per la tua risposta!", nonVediamo: "Non vediamo l'ora di festeggiare con te.",
+        grazie: "Grazie per la tua risposta!", nonVediamo: "Non vediamo l'ora di festeggiare insime!",
         invio: "Invio in corso...", info: "Per informazioni", creato: "creato con ❤️ da announceyourday.com"
       },
       EN: {
@@ -504,8 +506,8 @@
           .to(monogramRef.current, { opacity: 0, scale: 0.85, duration: 2.5 }, "<")
           .to(watermarkRef.current, { opacity: 1, scale: 1.05, filter: "blur(0px)", duration: 2.5 }, "<") 
           
-          /* PAUSA VIDEO IN PRIMO PIANO - Modificata a 0.5 secondi */
-          .to({}, { duration: 0.5 })
+          /* PAUSA VIDEO IN PRIMO PIANO - Mantenuta a 0.8 come richiesto */
+          .to({}, { duration: 0.8 })
           
           .to(watermarkRef.current, { opacity: 0.20, scale: 1, filter: "blur(3px)", duration: 3.0, ease: "power3.inOut" })
           .to(heroTextRef.current, { opacity: 1, y: 0, duration: 3.0, ease: "power3.out" }, "-=2.0")
@@ -551,19 +553,12 @@
           {/* Preloader */}
           <div ref={preloaderRef} className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden bg-[#FDFBF7]">
             <div onClick={handleClick} className="absolute inset-0 z-[210] cursor-pointer" />
-            
-            {/* LUCE PULSANTE SULLA CERALACCA */}
-            {!preloaderHidden && (
-              <div className="absolute top-[53%] left-1/2 w-20 h-20 bg-white rounded-full blur-2xl animate-pulse-light pointer-events-none" style={{ zIndex: 205, boxShadow: "0 0 80px 40px rgba(255,255,255,0.95)" }}></div>
-            )}
-
             <img src={VIDEO_POSTER} className="absolute inset-0 w-full h-full object-cover z-1" />
             <video ref={videoRef} muted playsInline className="absolute inset-0 w-full h-full object-cover z-2"><source src={VIDEO_URL} type="video/mp4" /></video>
           </div>
           
           <div ref={mainContentRef} className="opacity-0 overflow-x-hidden bg-[#FDFBF7]">
             
-            {/* HERO CENTRATA CON OMBREGGIATURA MORBIDA SU TUTTO IL TESTO PER LEGGIBILITA' */}
             <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
               <VideoHero ref={watermarkRef} videoRef={watermarkVideoRef} />
               <Monogram ref={monogramRef} />
@@ -590,7 +585,6 @@
 
             <BotanicalDivider />
 
-            {/* COUNTDOWN CENTRATO */}
             <section className="py-24 px-6 text-center reveal">
               <h2 className="font-serif italic text-2xl md:text-4xl text-[#7a9070] mb-12 max-w-sm md:max-w-xl mx-auto text-balance font-normal leading-relaxed">{t("contoRovescia")}</h2>
               <Countdown t={t} />
@@ -598,7 +592,6 @@
 
             <BotanicalDivider />
 
-            {/* LOCATION CENTRATA */}
             <section className="py-24 px-6 text-center max-w-3xl mx-auto reveal">
               <p className="font-serif italic text-sm tracking-[0.3em] uppercase mb-4 text-[#F4B9A1] font-medium">{t("titoloLocation")}</p>
               <h2 className="font-serif text-4xl md:text-5xl text-[#7a9070] mb-12 font-normal">{t("doveFesteggeremo")}</h2>
@@ -619,7 +612,6 @@
 
             <BotanicalDivider />
 
-            {/* FOOTER */}
             <footer className="py-20 text-center px-6">
               <p className="font-serif italic text-sm text-[#7a9070] mb-8 font-normal">Debora & Luca · 5 Settembre 2026</p>
               <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 mb-16">
@@ -645,3 +637,496 @@
   </script>
 </body>
 </html>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ["'Cormorant Garamond'", "serif"],
+            sans:  ["'Montserrat'", "sans-serif"],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: #FDFBF7; overflow: hidden; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    ::placeholder { opacity: 0.4; color: #A3B899; }
+    select option { background: #FDFBF7; color: #7a9070; }
+    .btn-premium { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useEffect, useRef, useState, useCallback, forwardRef } = React;
+    gsap.registerPlugin(ScrollTrigger);
+    
+    /* === [CONFIG_GLOBALS] LINK ASSETS === */
+    const MUSIC_URL = "https://ik.imagekit.io/hiacc/Template_D&L/tunetank-love-wedding-music-412759.mp3"; 
+    const VIDEO_URL = "https://ik.imagekit.io/hiacc/Template_D&L/B%20verde_CL%20Bianca%20D&L.mp4";
+    const WATERMARK_VIDEO_URL = "https://res.cloudinary.com/dvjgznbzm/video/upload/v1778709640/cornice_fiori_sposi_def_jc9d35.mp4"; 
+    const VIDEO_POSTER = "https://res.cloudinary.com/dvjgznbzm/image/upload/v1778739412/COPERTINA_B_Pesco_CL_Bianca_D_L_znvceb.png";
+    const RSVP_FRAME_VIDEO = "https://ik.imagekit.io/hiacc/Template_D&L/Fiori%20che%20s%20boccciano.mp4"; 
+    
+    const LOCATION_IMG = "https://res.cloudinary.com/dvjgznbzm/image/upload/v1775293975/IMG_2668_zslsvj.png";
+    const PARTY_IMG    = "https://res.cloudinary.com/dvjgznbzm/image/upload/v1775304249/IMG_2907_jknv2c.png";
+
+    const PHOTOS = [
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1774796845/IMG_4307_withcw.jpg",
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1774796848/IMG_8780_y48grg.jpg",
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1774796848/IMG_2553_vcrcg0.jpg",
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1774796847/IMG_2688_daidh8.jpg",
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1774796846/IMG_3396_rebrbg.jpg",
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1775308399/IMG_3404_ayt6zq.jpg",
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1775308397/IMG_1195_xbmxd7.jpg",
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1775308397/IMG_8739_mlh40h.jpg",
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1775308396/IMG_9341_rfes8h.jpg",
+      "https://res.cloudinary.com/dvjgznbzm/image/upload/f_auto,q_auto,w_1400/v1775308394/8664BC80-4060-442E-8F70-0CC77A1439FC_b7bxf5.jpg"
+    ];
+
+    /* === [TRADUZIONI] === */
+    const translations = {
+      IT: {
+        heroSposiamo: "Ci Sposiamo!", heroFrase: "Siamo felici di invitarvi al nostro matrimonio",
+        heroGiorno: "Sabato", heroData: "5 Settembre 2026", scorri: "Scorri",
+        contoRovescia: "Conto alla rovescia al giorno più Speciale della nostra Vita",
+        giorni: "giorni", ore: "ore", minuti: "minuti", secondi: "secondi",
+        titoloLocation: "✦  La Location  ✦", doveFesteggeremo: "Dove Festeggeremo",
+        testoLocation1: "La Cerimonia Civile e il Ricevimento si svolgeranno presso il",
+        testoLocation2: "Ristorante Golden Gate", testoLocation3: "Loc. La Fumosa, Bortigiadas — OT",
+        apriMaps: "Apri su Maps", titoloGiornata: "✦  La Giornata  ✦", programma: "Programma",
+        arrivo: "Accoglienza", arrivoDettaglio: "Arrivo degli ospiti", cerimonia: "Cerimonia Civile",
+        aperitivo: "Aperitivo di Benvenuto", aperitivoDettaglio: "Buffet", ricevimento: "Il Ricevimento",
+        torta: "Taglio della Torta", party: "Party & Live Band", titoloMomenti: "✦  I nostri momenti  ✦",
+        titoloRSVP: "✦  RSVP  ✦", entroData: "entro il 31 Luglio 2026", nome: "Nome e Cognome",
+        nomePlaceholder: "Il tuo nome", parteciperai: "Parteciperai?", siSaro: "Sì, ci sarò!",
+        noDispiace: "No, mi dispiace..", numPersone: "Numero di persone",
+        note: "Note o intolleranze alimentari", notePlaceholder: "Scrivi qui...",
+        canzone: "🎵  La tua canzone del cuore", canzonePlaceholder: "Titolo – Artista",
+        canzoneDettaglio: "La includeremo nella playlist della serata!", confermaBtn: "Conferma Presenza",
+        grazie: "Grazie per la tua risposta!", nonVediamo: "Non vediamo l'ora di festeggiare con te.",
+        invio: "Invio in corso...", info: "Per informazioni", creato: "creato con ❤️ da announceyourday.com"
+      },
+      EN: {
+        heroSposiamo: "We're getting married!", heroFrase: "We are happy to invite you to our wedding",
+        heroGiorno: "Saturday", heroData: "September 5, 2026", scorri: "Scroll",
+        contoRovescia: "Countdown to the most Special day of our lives",
+        giorni: "days", ore: "hours", minuti: "minutes", secondi: "seconds",
+        titoloLocation: "✦  The Venue  ✦", doveFesteggeremo: "Where we'll celebrate",
+        testoLocation1: "The Civil Ceremony and Reception will take place at",
+        testoLocation2: "Golden Gate Restaurant", testoLocation3: "Loc. La Fumosa, Bortigiadas — OT",
+        apriMaps: "Open in Maps", titoloGiornata: "✦  The Day  ✦", programma: "Program",
+        arrivo: "Welcome", arrivoDettaglio: "Arrival of guests", cerimonia: "Civil Ceremony",
+        aperitivo: "Welcome Aperitif", aperitivoDettaglio: "Buffet", ricevimento: "The Reception",
+        torta: "Cake Cutting", party: "Party & Live Band", titoloMomenti: "✦  Our moments  ✦",
+        titoloRSVP: "✦  RSVP  ✦", entroData: "by July 31, 2026", nome: "Full Name",
+        nomePlaceholder: "Your name", parteciperai: "Will you attend?", siSaro: "Yes, I'll be there!",
+        noDispiace: "No, I'm sorry..", numPersone: "Number of guests",
+        note: "Dietary requirements or notes", notePlaceholder: "Write here...",
+        canzone: "🎵  Your favorite song", canzonePlaceholder: "Title – Artist",
+        canzoneDettaglio: "We'll include it in the evening's playlist!", confermaBtn: "Confirm Presence",
+        grazie: "Thank you for your response!", nonVediamo: "We can't wait to celebrate with you.",
+        invio: "Sending...", info: "For information", creato: "created with ❤️ by announceyourday.com"
+      },
+      DE: {
+        heroSposiamo: "Wir heiraten!", heroFrase: "Wir freuen uns, euch zu unserer Hochzeit einzuladen",
+        heroGiorno: "Samstag", heroData: "5. September 2026", scorri: "Scrollen",
+        contoRovescia: "Countdown zum ganz besonderen Tag unseres Lebens",
+        giorni: "Tage", ore: "Stunden", minuti: "Minuten", secondi: "Sekunden",
+        titoloLocation: "✦  Die Location  ✦", doveFesteggeremo: "Wo wir feiern",
+        testoLocation1: "Die Trauung und die Feier finden statt im",
+        testoLocation2: "Golden Gate Restaurant", testoLocation3: "Loc. La Fumosa, Bortigiadas — OT",
+        apriMaps: "In Maps öffnen", titoloGiornata: "✦  Der Tag  ✦", programma: "Programm",
+        arrivo: "Empfang", arrivoDettaglio: "Ankunft der Gäste", cerimonia: "Trauung",
+        aperitivo: "Begrüßungs-Aperitif", aperitivoDettaglio: "Buffet", ricevimento: "Die Feier",
+        torta: "Tortenanschnitt", party: "Party & Live Band", titoloMomenti: "✦  Unsere Momente  ✦",
+        titoloRSVP: "✦  RSVP  ✦", entroData: "bis zum 31. Juli 2026", nome: "Vor- und Nachname",
+        nomePlaceholder: "Dein Name", parteciperai: "Nimmst du teil?", siSaro: "Ja, ich bin dabei!",
+        noDispiace: "Nein, es tut mir leid..", numPersone: "Anzahl der Personen",
+        note: "Anmerkungen oder Allergien", notePlaceholder: "Hier schreiben...",
+        canzone: "🎵  Dein Lieblingslied", canzonePlaceholder: "Titel – Künstler",
+        canzoneDettaglio: "Wir nehmen es in die Playlist des Abends auf!", confermaBtn: "Bestätigen",
+        grazie: "Danke für deine Antwort!", nonVediamo: "Wir freuen uns darauf, mit dir zu feiern.",
+        invio: "Wird gesendet...", info: "Für Informationen", creato: "erstellt mit ❤️ von announceyourday.com"
+      }
+    };
+
+    function BotanicalDivider({ className = "" }) {
+      return (
+        <div className={`flex items-center justify-center py-12 md:py-20 ${className}`}>
+          <svg width="320" height="32" viewBox="0 0 320 32" fill="none" style={{ opacity: 0.5 }}>
+            <line x1="0" y1="16" x2="112" y2="16" stroke="#A3B899" strokeWidth="0.5" />
+            <rect x="154" y="10" width="12" height="12" transform="rotate(45 160 16)" stroke="#A3B899" strokeWidth="0.75" fill="#FDFBF7" />
+            <line x1="208" y1="16" x2="320" y2="16" stroke="#A3B899" strokeWidth="0.5" />
+          </svg>
+        </div>
+      );
+    }
+    
+    const VideoHero = forwardRef(({ videoRef }, ref) => {
+      return (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden" style={{ zIndex: 0 }}>
+          <div ref={ref} className="relative w-[85vw] sm:w-[50vw] max-w-lg rounded-[1.5rem] overflow-hidden shadow-2xl" style={{ opacity: 0, transform: "scale(0.95)", filter: "blur(0px)", willChange: "opacity, transform, filter" }}>
+            <video ref={videoRef} loop={true} muted={true} playsInline={true} className="w-full h-auto pointer-events-none select-none" style={{ filter: "contrast(1.05)" }}>
+              <source src={WATERMARK_VIDEO_URL} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      );
+    });
+
+    const Monogram = forwardRef((props, ref) => {
+      return (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden" style={{ zIndex: 1 }}>
+          <span ref={ref} className="font-serif italic leading-none"
+            style={{ fontSize: "clamp(12rem,30vw,24rem)", color: "#A3B899", opacity: 0.5, transform: "scale(1.15)", letterSpacing: "-0.02em", userSelect: "none" }}>
+            D&L
+          </span>
+        </div>
+      );
+    });
+    
+    function Countdown({ t }) {
+      const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      useEffect(() => {
+        const target = new Date("September 5, 2026 11:00:00").getTime();
+        const id = setInterval(() => {
+          const diff = target - Date.now();
+          if (diff < 0) return;
+          setTimeLeft({
+            days: Math.floor(diff / 86400000),
+            hours: Math.floor((diff % 86400000) / 3600000),
+            minutes: Math.floor((diff % 3600000) / 60000),
+            seconds: Math.floor((diff % 60000) / 1000),
+          });
+        }, 1000);
+        return () => clearInterval(id);
+      }, []);
+      
+      return (
+        <div className="grid grid-cols-4 gap-4 max-w-sm mx-auto font-sans uppercase tracking-widest">
+          {[{v: timeLeft.days, l: t("giorni")}, {v: timeLeft.hours, l: t("ore")}, {v: timeLeft.minutes, l: t("minuti")}, {v: timeLeft.seconds, l: t("secondi")}].map((item, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <span className="text-3xl md:text-5xl font-light tabular-nums text-[#7a9070]">{String(item.v).padStart(2, "0")}</span>
+              <span className="text-[9px] mt-2 font-medium text-[#F4B9A1]">{item.l}</span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    function PhotoGallery({ t }) {
+      const [current, setCurrent] = useState(0);
+      const [animating, setAnimating] = useState(false);
+      const pausedRef = useRef(false);
+      
+      const goTo = useCallback((index, fromUser = false) => {
+        if (animating) return;
+        setAnimating(true);
+        if (fromUser) { pausedRef.current = true; setTimeout(() => { pausedRef.current = false; }, 7000); }
+        setCurrent((index + PHOTOS.length) % PHOTOS.length);
+        
+        // Animazione galleria rallentata per morbidezza
+        setTimeout(() => setAnimating(false), 1500);
+      }, [animating]);
+      
+      useEffect(() => {
+        const id = setInterval(() => { if (!pausedRef.current) goTo(current + 1); }, 4800);
+        return () => clearInterval(id);
+      }, [current, goTo]);
+      
+      return (
+        <section className="w-full py-24 md:py-32" style={{ backgroundColor: "#f5f0e8" }}>
+          <div className="text-center mb-10">
+            <p className="font-serif italic text-sm tracking-[0.4em] uppercase font-semibold text-[#F4B9A1]">{t("titoloMomenti")}</p>
+          </div>
+          <div className="relative mx-auto overflow-hidden" style={{ height: "clamp(260px,50vw,520px)", maxWidth: "900px" }}>
+            {PHOTOS.map((src, i) => {
+              const offset = ((i - current + PHOTOS.length) % PHOTOS.length);
+              const norm = offset > PHOTOS.length / 2 ? offset - PHOTOS.length : offset;
+              const abs = Math.abs(norm);
+              const style = abs > 1 ? { opacity: 0, pointerEvents: "none", transform: "translateX(0) scale(0.6)" } : 
+                            norm === 0 ? { transform: "translateX(0) scale(1)", opacity: 1, zIndex: 10, boxShadow: "0 24px 60px rgba(0,0,0,0.2)" } : 
+                            { transform: `translateX(${norm > 0 ? 68 : -68}%) scale(0.78)`, opacity: 0.65, zIndex: 5, cursor: "pointer" };
+              return (
+                <div key={src} onClick={() => norm !== 0 && goTo(i, true)}
+                  className="absolute top-0 left-1/2 ease-out"
+                  style={{ 
+                     width: "clamp(220px,55vw,560px)", 
+                     height: "100%", 
+                     marginLeft: "calc(clamp(220px,55vw,560px) / -2)", 
+                     transition: "transform 1.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 1.5s ease, filter 1.5s ease",
+                     ...style 
+                  }}>
+                  <img src={src} className="w-full h-full rounded-sm object-cover" />
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex items-center justify-center gap-8 mt-8">
+            <div className="flex items-center gap-2">
+              {PHOTOS.map((_, i) => (
+                <button key={i} onClick={() => goTo(i, true)} className="rounded-full transition-all duration-1000"
+                  style={{ width: i === current ? "22px" : "7px", height: "7px", backgroundColor: i === current ? "#F4B9A1" : "#A3B899", opacity: i === current ? 1 : 0.6 }} />
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+    
+    function Timeline({ t }) {
+      const partyRef = useRef(null);
+      const firedRef = useRef(false);
+
+      const EVENTS = [
+        { time: "11:30", moment: t("arrivo"), detail: t("arrivoDettaglio") },
+        { time: "11:45", moment: t("cerimonia"), detail: "" },
+        { time: "12:45", moment: t("aperitivo"), detail: t("aperitivoDettaglio") },
+        { time: "13:45", moment: t("ricevimento"), detail: "" },
+        { time: "17:00", moment: t("torta"), detail: "" },
+        { time: "18:00", moment: t("party"), detail: "" },
+      ];
+      
+      useEffect(() => {
+        const obs = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting && !firedRef.current) { 
+            firedRef.current = true; 
+            confetti({ particleCount:80, spread:60, origin:{y:0.7}, colors:["#A3B899","#F4B9A1"] });
+          }
+        }, { threshold: 0.8 });
+        if(partyRef.current) obs.observe(partyRef.current);
+        return () => obs.disconnect();
+      }, []);
+      
+      return (
+        <div className="w-full">
+          <section className="pt-28 md:pt-40 pb-16 px-6 max-w-2xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="font-serif italic text-base tracking-[0.4em] uppercase mb-3 font-medium text-[#F4B9A1]">{t("titoloGiornata")}</p>
+              <h2 className="font-serif text-4xl md:text-5xl font-normal text-[#7a9070]">{t("programma")}</h2>
+            </div>
+            <div className="relative">
+              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-[#A3B899]/40 -translate-x-1/2" />
+              <div className="space-y-0 relative z-10">
+                {EVENTS.map((ev, i) => {
+                  const isLeft  = i % 2 === 0;
+                  const isParty = ev.time === "18:00";
+                  return (
+                    <div key={i} ref={isParty ? partyRef : undefined} className="relative flex items-center min-h-[5.5rem]">
+                      <div className={`w-1/2 pr-8 text-right ${isLeft ? "block" : "invisible"}`}>
+                        {isLeft && <>
+                          <span className="font-sans text-sm font-medium uppercase tracking-[0.25em] block mb-1 text-[#F4B9A1]">{ev.time}</span>
+                          <p className={`font-serif leading-tight text-[#7a9070] ${isParty ? "text-[1.2rem] italic" : "text-[1.1rem]"}`}>{isParty ? "🎶 " : ""}{ev.moment}</p>
+                          {ev.detail && <p className="font-serif italic text-sm mt-0.5 text-[#7a9070]/80">{ev.detail}</p>}
+                        </>}
+                      </div>
+                      <div className="absolute left-1/2 -translate-x-1/2 z-10">
+                        <div className={`rounded-full border-2 ${isParty ? 'w-[14px] h-[14px] border-[#F4B9A1] bg-[#F4B9A1]' : 'w-[10px] h-[10px] border-[#A3B899] bg-[#FDFBF7]'}`} />
+                      </div>
+                      <div className={`w-1/2 pl-8 ${!isLeft ? "block" : "invisible"}`}>
+                        {!isLeft && <>
+                          <span className="font-sans text-sm font-medium uppercase tracking-[0.25em] block mb-1 text-[#F4B9A1]">{ev.time}</span>
+                          <p className={`font-serif leading-tight text-[#7a9070] ${isParty ? "text-[1.2rem] italic" : "text-[1.1rem]"}`}>{isParty ? "🎶 " : ""}{ev.moment}</p>
+                          {ev.detail && <p className="font-serif italic text-sm mt-0.5 text-[#7a9070]/80">{ev.detail}</p>}
+                        </>}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        </div>
+      );
+    }
+    
+    function RSVPForm({ t }) {
+      const [name, setName] = useState("");
+      const [attending, setAttending] = useState("");
+      const [guests, setGuests] = useState("1");
+      const [song, setSong] = useState("");
+      const [notes, setNotes] = useState("");
+      const [submitted, setSubmitted] = useState(false);
+      const [submitting, setSubmitting] = useState(false);
+      
+      const inputStyle = { borderBottom: "1px solid rgba(163, 184, 153, 0.4)", color: "#4A4A4A" }; 
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        setTimeout(() => {
+          setSubmitting(false);
+          setSubmitted(true);
+        }, 1500);
+      };
+
+      return (
+        <section id="rsvp-section" className="relative py-28 md:py-40 px-6 w-full flex items-center justify-center overflow-hidden">
+          
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-0 opacity-70 mix-blend-multiply overflow-hidden">
+             <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+               <source src={RSVP_FRAME_VIDEO} type="video/mp4" />
+             </video>
+          </div>
+
+          <div className="relative z-10 max-w-lg w-full">
+            <div className="text-center mb-10">
+              <p className="font-serif italic text-base tracking-[0.4em] uppercase mb-2 font-medium text-[#F4B9A1]">{t("titoloRSVP")}</p>
+              <p className="font-serif italic text-xl font-normal text-[#7a9070]">{t("entroData")}</p>
+            </div>
+            
+            <div className="px-6 py-10 md:p-10 bg-white/70 backdrop-blur-md rounded-2xl shadow-xl border border-[#A3B899]/20">
+              {submitted ? (
+                <div className="text-center py-12 animate-fade-in">
+                  <p className="font-serif italic text-2xl mb-3 font-normal text-[#7a9070]">{t("grazie")}</p>
+                  <p className="font-sans text-[11px] uppercase tracking-widest font-medium text-[#F4B9A1]">{t("nonVediamo")}</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-8 relative">
+                  {submitting && (
+                    <div className="absolute inset-0 bg-white/90 flex items-center justify-center z-20 backdrop-blur-sm rounded-xl">
+                      <div className="font-sans text-xs font-medium uppercase tracking-widest animate-pulse text-[#7a9070]">{t("invio")}</div>
+                    </div>
+                  )}
+                  <div>
+                    <label className="block font-sans text-[10px] font-medium uppercase tracking-[0.2em] mb-2 text-[#7a9070]/80">{t("nome")}</label>
+                    <input type="text" required value={name} onChange={e => setName(e.target.value)}
+                      className="w-full bg-transparent py-2 font-serif text-xl font-normal focus:outline-none transition-colors focus:border-[#7a9070]"
+                      style={inputStyle} placeholder={t("nomePlaceholder")} />
+                  </div>
+                  <div>
+                    <label className="block font-sans text-[10px] font-medium uppercase tracking-[0.2em] mb-3 text-[#7a9070]/80">{t("parteciperai")}</label>
+                    <div className="flex gap-4">
+                      <button type="button" onClick={() => setAttending("si")} className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full border transition-all ${attending === 'si' ? 'bg-[#A3B899]/10 border-[#A3B899]' : 'bg-white/50 border-[#A3B899]/30'}`}>
+                        <span className={`font-sans text-[11px] font-medium uppercase tracking-widest ${attending === 'si' ? 'text-[#7a9070]' : 'text-[#7a9070]/60'}`}>SÌ</span>
+                      </button>
+                      <button type="button" onClick={() => setAttending("no")} className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full border transition-all ${attending === 'no' ? 'bg-[#A3B899]/10 border-[#A3B899]' : 'bg-white/50 border-[#A3B899]/30'}`}>
+                        <span className={`font-sans text-[11px] font-medium uppercase tracking-widest ${attending === 'no' ? 'text-[#7a9070]' : 'text-[#7a9070]/60'}`}>NO</span>
+                      </button>
+                    </div>
+                  </div>
+                  {attending==="si" && (
+                    <div className="animate-fade-in">
+                      <label className="block font-sans text-[10px] font-medium uppercase tracking-[0.2em] mb-2 text-[#7a9070]/80">{t("numPersone")}</label>
+                      <select value={guests} onChange={e => setGuests(e.target.value)}
+                        className="w-full bg-transparent py-2 font-serif text-xl font-normal focus:outline-none cursor-pointer text-center appearance-none" 
+                        style={inputStyle}>
+                        {[1,2,3,4,5,6].map(n => <option key={n} value={String(n)}>{n}</option>)}
+                      </select>
+                    </div>
+                  )}
+                  <div>
+                    <label className="block font-sans text-[10px] font-medium uppercase tracking-[0.2em] mb-2 text-[#7a9070]/80">{t("note")}</label>
+                    <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={1}
+                      className="w-full bg-transparent py-2 font-serif text-lg font-normal focus:outline-none resize-none focus:border-[#7a9070]"
+                      style={inputStyle} placeholder={t("notePlaceholder")} />
+                  </div>
+                  <div>
+                    <label className="block font-sans text-[10px] font-medium uppercase tracking-[0.2em] mb-2 text-[#7a9070]/80">{t("canzone")}</label>
+                    <input type="text" value={song} onChange={e => setSong(e.target.value)}
+                      className="w-full bg-transparent py-2 font-serif text-lg font-normal focus:outline-none focus:border-[#7a9070]"
+                      style={inputStyle} placeholder={t("canzonePlaceholder")} />
+                    <p className="font-serif italic text-sm mt-1 text-[#7a9070]/70 font-normal">{t("canzoneDettaglio")}</p>
+                  </div>
+                  <button type="submit"
+                    disabled={!attending || !name}
+                    className="w-full py-4 mt-6 text-center font-sans text-[11px] font-medium uppercase tracking-[0.3em] btn-premium rounded-xl shadow-lg bg-[#A3B899] text-white hover:bg-[#7a9070]">
+                    {t("confermaBtn")}
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        </section>
+      );
+    }
+    
+    function App() {
+      const videoRef = useRef(null);
+      const clickAreaRef = useRef(null);
+      const preloaderRef = useRef(null);
+      const mainContentRef = useRef(null);
+      const heroTextRef = useRef(null);
+      const scrollArrowRef = useRef(null);
+      const monogramRef = useRef(null);
+      const watermarkRef = useRef(null);
+      const watermarkVideoRef = useRef(null);
+      const textCiSposiamoFullscreenRef = useRef(null);
+      const bgAudioRef = useRef(null);
+      const flashRef = useRef(null); 
+      const sequenceStarted = useRef(false);
+      
+      const [preloaderHidden, setPreloaderHidden] = useState(false);
+      const [lang, setLang] = useState('IT');
+      const [musicPlaying, setMusicPlaying] = useState(false);
+
+      const t = (key) => translations[lang][key] || key;
+
+      useEffect(() => {
+        const handleVisibilityChange = () => {
+          if (bgAudioRef.current) {
+            if (document.hidden) bgAudioRef.current.pause();
+            else if (musicPlaying) bgAudioRef.current.play().catch(()=>{});
+          }
+        };
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+      }, [musicPlaying]);
+
+      useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+        const checkTime = () => { if (video.currentTime >= 5.5 && !sequenceStarted.current) { sequenceStarted.current = true; runCinematicSequence(); }};
+        video.addEventListener("timeupdate", checkTime);
+        video.addEventListener("ended", () => { if (!sequenceStarted.current) { sequenceStarted.current = true; runCinematicSequence(); }});
+      }, []);
+      
+      /* Animazioni in Scroll RALLENTATE E MORBIDE (2.5 secondi) */
+      useEffect(() => {
+        if (!preloaderHidden) return;
+        document.querySelectorAll(".stagger-group").forEach(group => {
+          gsap.fromTo(Array.from(group.children), { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 2.5, stagger: 0.3, ease: "power3.out", scrollTrigger: { trigger: group, start: "top 82%" } });
+        });
+        document.querySelectorAll(".reveal").forEach(el => gsap.fromTo(el, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 2.5, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } }));
+        ScrollTrigger.refresh();
+      }, [preloaderHidden, lang]);
+
+      function runCinematicSequence() {
+        const tl = gsap.timeline();
+        
+        // Entrata lenta ed elegante (3.0 secondi di transizioni globali)
+        tl.to(flashRef.current, { opacity: 1, duration: 1.5, ease: "power2.in" })
+          .set(preloaderRef.current, { display: "none" })
+          .call(() => { document.body.style.overflow = "auto"; setPreloaderHidden(true); })
+          .to(flashRef.current, { opacity: 0, duration: 3.0, ease: "power2.out" })
+          .to(mainContentRef.current, { opacity: 1, duration: 1.5 }, "-=3.0")
+          
+          .to(monogramRef.current, { opacity: 0.05, scale: 1, duration: 3.0 }, "-=2.0")
+          .to(textCiSposiamoFullscreenRef.current, { opacity: 1, duration: 3.0 }, "<")
+          
+          .to({}, { duration: 1.5 })
+          
+          .to(textCiSposiamoFullscreenRef.current, { opacity: 0, scale: 0.85, duration: 2.5 })
+          .to(monogramRef.current, { opacity: 0, scale: 0.85, duration: 2.5 }, "<")
+          .to(watermarkRef.current, { opacity: 1, scale: 1.05, filter: "blur(0px)", duration: 2.5 }, "<") 
+          
+          /* PAUSA VIDEO IN PRIMO PIANO: 0.5 secondi (Come richiesto) */
+          .to({}, { duration: 0.5 })
+          
+          /* === TRANSIZIONE A SFONDO VELOCISSIMA: 0.3 secondi (Come richiesto) === */
+          .to(watermarkRef.current, { opacity: 0.20, scale: 1, filter: "blur(3px)", duration: 0.3, ease: "power2.out" })
+          
+          /* I testi e le frecce app
